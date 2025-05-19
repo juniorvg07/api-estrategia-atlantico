@@ -150,10 +150,10 @@ public class AuthController {
         // Crear cookie HttpOnly para el token
         ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)
                 .httpOnly(true)
-                .secure(false) // false para entorno de desarrollo y true para producción
-                .sameSite("Lax")
+                .secure(true) // false para entorno de desarrollo y true para producción
+                .sameSite("None")
                 .path("/")
-                .maxAge(24 * 60 * 60) // 1 día
+                .maxAge(60 * 60) // 1 hora
                 .build();
 
         // Construir la respuesta con información no sensible en el body
@@ -174,8 +174,8 @@ public class AuthController {
         // Crear una cookie con el mismo nombre y maxAge 0 para eliminarla
         ResponseCookie deleteCookie = ResponseCookie.from("jwt", "")
                 .httpOnly(true)
-                .secure(false) // solo si usas HTTPS
-                .sameSite("Lax")
+                .secure(false)
+                .sameSite("None")
                 .path("/")
                 .maxAge(0)
                 .build();
