@@ -70,6 +70,8 @@ public class SecurityConfig {
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true); // Necesario si usas cookies o Authorization headers
 
+        System.out.println("CORS configurado correctamente");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
