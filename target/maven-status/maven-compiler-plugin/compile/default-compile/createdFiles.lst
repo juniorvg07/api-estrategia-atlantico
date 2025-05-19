@@ -1,0 +1,11 @@
+com\vasco\referidos\ReferidosApplication.class
+com\vasco\referidos\services\UserDetailsServiceImpl.class
+com\vasco\referidos\repositories\PersonalRepository.class
+com\vasco\referidos\repositories\UsersRepository.class
+com\vasco\referidos\auth\SecurityConfig.class
+com\vasco\referidos\controllers\PersonalController.class
+com\vasco\referidos\auth\AuthController.class
+com\vasco\referidos\entities\Personal.class
+com\vasco\referidos\auth\JwtUtil.class
+com\vasco\referidos\auth\JwtRequestFilter.class
+com\vasco\referidos\entities\Users.class
