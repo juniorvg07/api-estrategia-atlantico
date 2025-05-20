@@ -153,7 +153,7 @@ public class AuthController {
                 .secure(true) // false para entorno de desarrollo y true para producción
                 .sameSite("None")
                 .path("/")
-                .maxAge(60 * 60) // 1 hora
+                .maxAge(15 * 60) // 900 segundos o 15 minutos
                 .build();
 
         // Construir la respuesta con información no sensible en el body
