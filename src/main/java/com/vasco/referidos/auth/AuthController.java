@@ -174,7 +174,7 @@ public class AuthController {
         // Crear una cookie con el mismo nombre y maxAge 0 para eliminarla
         ResponseCookie deleteCookie = ResponseCookie.from("jwt", "")
                 .httpOnly(true)
-                .secure(false)
+                .secure(true)
                 .sameSite("None")
                 .path("/")
                 .maxAge(0)
