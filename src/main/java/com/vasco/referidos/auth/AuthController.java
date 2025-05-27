@@ -184,5 +184,12 @@ public class AuthController {
 
         return ResponseEntity.ok("Sesión cerrada correctamente");
     }
+
+    @DeleteMapping("/deleteUser")
+    @PreAuthorize("hasRole('SUPERADMIN')")
+    public ResponseEntity<?> delete(@RequestParam String name) {
+        userRepository.deleteByUsername(name).orElse(null);
+        return ResponseEntity.ok("Usuario eliminado");
+    }
 }
 
