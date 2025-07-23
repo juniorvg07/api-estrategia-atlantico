@@ -53,13 +53,18 @@ public class PersonalController {
     public List<Document> getReferidosConLider() {
         MatchOperation match = Aggregation.match(Criteria.where("rol").is("Referido"));
 
-        // $lookup con $expr para convertir idLider (string) a ObjectId
+        // $lookup con $expr para convertir idLider (string) a ObjectId y el procesamiento de nombre y apellido
         Document lookupExpr = new Document("$lookup",
                 new Document("from", "respuestas")
                         .append("let", new Document("idLiderStr", "$lider"))
                         .append("pipeline", List.of(
                                 new Document("$match", new Document("$expr", new Document("$eq", List.of("$_id", new Document("$toObjectId", "$$idLiderStr"))))),
-                                new Document("$project", new Document("nombre", 1).append("documento", 1))
+                                new Document("$project", new Document("documento", 1).append("nombre", new Document("$arrayElemAt", List.of(
+                                                new Document("$split", List.of("$nombre", " ")), 0)))
+                                        .append("apellido", new Document("$arrayElemAt", List.of(
+                                                new Document("$split", List.of("$apellido", " ")), 0)))
+                                ),
+                                new Document("$addFields", new Document("nombre", new Document("$concat", List.of("$nombre", " ", "$apellido"))))
                         ))
                         .append("as", "datosLider")
         );
@@ -232,13 +237,18 @@ public class PersonalController {
     public List<Document> getReferidosConLiderPorForo(@PathVariable String foro) {
         MatchOperation match = Aggregation.match(Criteria.where("rol").is("Referido").and("foro").is(foro));
 
-        // $lookup con $expr para convertir idLider (string) a ObjectId
+        // $lookup con $expr para convertir idLider (string) a ObjectId y el procesamiento de nombre y apellido
         Document lookupExpr = new Document("$lookup",
                 new Document("from", "respuestas")
                         .append("let", new Document("idLiderStr", "$lider"))
                         .append("pipeline", List.of(
                                 new Document("$match", new Document("$expr", new Document("$eq", List.of("$_id", new Document("$toObjectId", "$$idLiderStr"))))),
-                                new Document("$project", new Document("nombre", 1).append("documento", 1))
+                                new Document("$project", new Document("documento", 1).append("nombre", new Document("$arrayElemAt", List.of(
+                                        new Document("$split", List.of("$nombre", " ")), 0)))
+                                        .append("apellido", new Document("$arrayElemAt", List.of(
+                                                new Document("$split", List.of("$apellido", " ")), 0)))
+                                ),
+                                new Document("$addFields", new Document("nombre", new Document("$concat", List.of("$nombre", " ", "$apellido"))))
                         ))
                         .append("as", "datosLider")
         );
